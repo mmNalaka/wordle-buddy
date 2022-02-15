@@ -47,14 +47,17 @@ export const getSuggestions = (words: Word[]): string[] => {
       if (letter.inUse) {
         inUse.add(letter);
       }
+      if (!letter.inPosition && !letter.inUse) {
+        unUsed.add(letter);
+      }
     });
   });
 
   suggestions = WORDS.filter(
     (w) =>
-      [...inUse].every((l) => !w.includes(l.text)) &&
-      [...unUsed].every((l) => w.includes(l.text))
+      [...unUsed].every((l) => !w.includes(l.text)) &&
+      [...inUse].every((l) => !w.includes(l.text))
   );
 
-  return suggestions.slice(0, 20);
+  return suggestions.slice(0, 30);
 };
