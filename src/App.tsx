@@ -60,8 +60,15 @@ function App() {
                 inPosition={letter.inPosition}
                 value={letter.text}
                 onChange={(e: any) => {
-                  const newWord = currentWord.slice(0);
+                  const newWord = clone(currentWord);
                   newWord[index].text = e.target.value || "";
+
+                  if (newWord[index].text === "") {
+                    newWord[activeLetter].set = false;
+                    newWord[activeLetter].inUse = false;
+                    newWord[activeLetter].inPosition = false;
+                  }
+
                   if (e.target.value) {
                     setActiveLetter(index + 1);
                   }
