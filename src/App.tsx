@@ -61,18 +61,26 @@ function App() {
                 value={letter.text}
                 onChange={(e: any) => {
                   const newWord = clone(currentWord);
-                  newWord[index].text = e.target.value || "";
+                  newWord[index].text = e.target?.value || "";
 
                   if (newWord[index].text === "") {
-                    newWord[activeLetter].set = false;
-                    newWord[activeLetter].inUse = false;
-                    newWord[activeLetter].inPosition = false;
+                    setActiveValue("");
+
+                    if (newWord[activeLetter]?.set) {
+                      newWord[activeLetter].set = false;
+                    }
+                    if (newWord[activeLetter]?.inUse) {
+                      newWord[activeLetter].set = false;
+                    }
+                    if (newWord[activeLetter]?.inPosition) {
+                      newWord[activeLetter].inPosition = false;
+                    }
                   }
 
-                  if (e.target.value) {
+                  if (e.target.value !== "") {
                     setActiveLetter(index + 1);
+                    setActiveValue(e.target.value);
                   }
-                  setActiveValue(e.target.value);
                   setCurrentWord(newWord as Word);
                 }}
                 onFocus={(_) => {
@@ -86,7 +94,7 @@ function App() {
             <button
               className="text-sm bg-slate-400 focus:bg-slate-600 hover:bg-slate-500 rounded-md"
               onClick={() => {
-                if (!currentWord[activeLetter].text) {
+                if (!currentWord[activeLetter]?.text) {
                   return;
                 }
                 const newWord = [...currentWord];
@@ -103,7 +111,7 @@ function App() {
             <button
               className="text-sm bg-yellow-400 focus:bg-yellow-600 hover:bg-yellow-500 rounded-md"
               onClick={() => {
-                if (!currentWord[activeLetter].text) {
+                if (!currentWord[activeLetter]?.text) {
                   return;
                 }
                 const newWord = [...currentWord];
@@ -120,7 +128,7 @@ function App() {
             <button
               className="text-sm bg-green-400 focus:bg-green-600 hover:bg-green-500 h-10 rounded-md"
               onClick={() => {
-                if (!currentWord[activeLetter].text) {
+                if (!currentWord[activeLetter]?.text) {
                   return;
                 }
                 const newWord = [...currentWord];
