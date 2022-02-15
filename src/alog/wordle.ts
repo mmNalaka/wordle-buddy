@@ -11,7 +11,7 @@ export const getPossibleAnswers = (words: Word[]): string[] => {
       if (letter.inPosition) {
         inPosition.push({ ...letter, position });
       }
-      if (letter.inUse) {
+      if (!letter.inPosition && letter.inUse) {
         inUse.add(letter);
       }
       if (!letter.inPosition && !letter.inUse) {
