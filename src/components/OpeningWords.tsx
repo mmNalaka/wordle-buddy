@@ -14,7 +14,9 @@ export const WorldList = ({ words = [], title }: Props) => {
           return (
             <span
               key={index}
-              className="flex font-mono text-slate-400 uppercase tracking-wider font-bold"
+              className={`flex font-mono uppercase tracking-wider font-bold  ${
+                words.length === 1 ? "text-green-400" : "text-slate-400"
+              }`}
             >
               {word}
             </span>

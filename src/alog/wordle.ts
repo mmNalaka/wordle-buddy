@@ -12,7 +12,7 @@ export const getPossibleAnswers = (words: Word[]): string[] => {
         inPosition.push({ ...letter, position });
       }
       if (!letter.inPosition && letter.inUse) {
-        inUse.add(letter);
+        inUse.add({ ...letter, position });
       }
       if (!letter.inPosition && !letter.inUse) {
         unUsed.add(letter);
@@ -30,6 +30,11 @@ export const getPossibleAnswers = (words: Word[]): string[] => {
       inPosition.every((l) => {
         return w.split("").find((l2, i) => {
           return i === l.position && l2 === l.text;
+        });
+      }) &&
+      [...inUse].every((l) => {
+        return w.split("").find((wl, i) => {
+          return i === l.position && wl !== l.text;
         });
       })
   );
@@ -59,5 +64,8 @@ export const getSuggestions = (words: Word[]): string[] => {
       [...inUse].every((l) => !w.includes(l.text))
   );
 
-  return suggestions.slice(0, 30);
+  // Filter out words that has duplicated letters
+  return suggestions
+    .filter((w) => !w.split("").some((v, i, a) => a.lastIndexOf(v) !== i))
+    .slice(0, 30);
 };
