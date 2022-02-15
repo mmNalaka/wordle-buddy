@@ -10,7 +10,7 @@ export const formatWords = (
 
   words.forEach((word) => {
     word.split("").forEach((letter, i) => {
-      const index = i + 1;
+      const index = i;
       letterIndex[letter as Alphabet].add(word);
       positionIndex[index as keyof PositionIndex][letter as Alphabet].add(word);
     });
@@ -22,7 +22,7 @@ export const formatWords = (
   };
 };
 
-const newFilterWordsObject = () => {
+export const newFilterWordsObject = () => {
   return {
     letterIndex: {
       a: new Set<string>(),
@@ -53,6 +53,34 @@ const newFilterWordsObject = () => {
       z: new Set<string>(),
     },
     positionIndex: {
+      0: {
+        a: new Set<string>(),
+        b: new Set<string>(),
+        c: new Set<string>(),
+        d: new Set<string>(),
+        e: new Set<string>(),
+        f: new Set<string>(),
+        g: new Set<string>(),
+        h: new Set<string>(),
+        i: new Set<string>(),
+        j: new Set<string>(),
+        k: new Set<string>(),
+        l: new Set<string>(),
+        m: new Set<string>(),
+        n: new Set<string>(),
+        o: new Set<string>(),
+        p: new Set<string>(),
+        q: new Set<string>(),
+        r: new Set<string>(),
+        s: new Set<string>(),
+        t: new Set<string>(),
+        u: new Set<string>(),
+        v: new Set<string>(),
+        w: new Set<string>(),
+        x: new Set<string>(),
+        y: new Set<string>(),
+        z: new Set<string>(),
+      },
       1: {
         a: new Set<string>(),
         b: new Set<string>(),
@@ -138,34 +166,6 @@ const newFilterWordsObject = () => {
         z: new Set<string>(),
       },
       4: {
-        a: new Set<string>(),
-        b: new Set<string>(),
-        c: new Set<string>(),
-        d: new Set<string>(),
-        e: new Set<string>(),
-        f: new Set<string>(),
-        g: new Set<string>(),
-        h: new Set<string>(),
-        i: new Set<string>(),
-        j: new Set<string>(),
-        k: new Set<string>(),
-        l: new Set<string>(),
-        m: new Set<string>(),
-        n: new Set<string>(),
-        o: new Set<string>(),
-        p: new Set<string>(),
-        q: new Set<string>(),
-        r: new Set<string>(),
-        s: new Set<string>(),
-        t: new Set<string>(),
-        u: new Set<string>(),
-        v: new Set<string>(),
-        w: new Set<string>(),
-        x: new Set<string>(),
-        y: new Set<string>(),
-        z: new Set<string>(),
-      },
-      5: {
         a: new Set<string>(),
         b: new Set<string>(),
         c: new Set<string>(),

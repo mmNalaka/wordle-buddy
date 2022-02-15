@@ -2,11 +2,12 @@ import clone from "deep-clone";
 import { useEffect, useState } from "react";
 import "./App.css";
 
-import { OpeningWords } from "./components/OpeningWords";
+import { WorldList } from "./components/OpeningWords";
 
 import { Word } from "./types";
-import { DEFAULT_WORD } from "./alog/constants";
+import { DEFAULT_WORD, OPENING_WORDS } from "./alog/constants";
 import { LetterBox } from "./components/LetterBox";
+import { getPossibleAnswers } from "./alog/wordle";
 
 function App() {
   const [gameWord, setGameWord] = useState("robin");
@@ -14,6 +15,7 @@ function App() {
   const [currentWord, setCurrentWord] = useState<Word>(clone(DEFAULT_WORD));
   const [activeLetter, setActiveLetter] = useState<number>(0);
   const [activeValue, setActiveValue] = useState("");
+  const [answers, setAnswers] = useState<string[]>([]);
 
   useEffect(() => {
     const leister = (e: KeyboardEvent) => {
@@ -26,6 +28,25 @@ function App() {
       document.removeEventListener("keydown", leister);
     };
   }, [activeLetter, activeValue]);
+
+  // Submit handler
+  const handleSubmit = () => {
+    const allSet = currentWord.every((letter) => letter.set);
+
+    if (!allSet) {
+      alert("You must set all letters before you can submit");
+      return;
+    }
+
+    if (guessedWords.length < 6) {
+      setGuessedWords([...guessedWords, currentWord]);
+      setCurrentWord(clone(DEFAULT_WORD));
+      setActiveLetter(0);
+    }
+
+    const a = getPossibleAnswers([...guessedWords, currentWord]);
+    setAnswers(a);
+  };
 
   return (
     <div className="App">
@@ -143,25 +164,21 @@ function App() {
 
             <button
               className="col-span-3 text-sm bg-violet-400 focus:bg-violet-600 hover:bg-violet-500 h-10 rounded-md"
-              onClick={() => {
-                const allSet = currentWord.every((letter) => letter.set);
-
-                if (!allSet) {
-                  alert("You must set all letters before you can submit");
-                  return;
-                }
-
-                setGuessedWords([...guessedWords, currentWord]);
-                setCurrentWord(clone(DEFAULT_WORD));
-                setActiveLetter(0);
-              }}
+              onClick={handleSubmit}
             >
               Submit
             </button>
           </div>
 
           <div className="overflow-y-auto">
-            {!guessedWords.length && <OpeningWords />}
+            <WorldList
+              words={!guessedWords.length ? (OPENING_WORDS as any) : answers}
+              title={
+                !guessedWords.length
+                  ? "Opening suggestions"
+                  : "Possible answers"
+              }
+            />
           </div>
         </section>
       </main>

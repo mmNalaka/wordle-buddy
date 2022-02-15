@@ -3,6 +3,7 @@ export interface Letter {
   set: boolean;
   inUse: boolean;
   inPosition: boolean;
+  position?: number;
 }
 
 export type Word = Letter[];
@@ -65,9 +66,9 @@ export interface LetterIndex {
 }
 
 export interface PositionIndex {
+  0: LetterIndex;
   1: LetterIndex;
   2: LetterIndex;
   3: LetterIndex;
   4: LetterIndex;
-  5: LetterIndex;
 }

@@ -1,15 +1,16 @@
-import React from "react";
+interface Props {
+  words: string[];
+  title: string;
+}
 
-import { OPENING_WORDS } from "../alog/constants";
-
-export const OpeningWords = () => {
+export const WorldList = ({ words = [], title }: Props) => {
   return (
     <div className="mt-6">
       <h3 className="text-left text-xl font-mono font-bold text-slate-400 pb-2">
-        Opening Words
+        {title}
       </h3>
       <div className="">
-        {OPENING_WORDS.map((word, index) => {
+        {words.map((word, index) => {
           return (
             <span
               key={index}
