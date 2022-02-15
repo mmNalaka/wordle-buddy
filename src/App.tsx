@@ -85,7 +85,7 @@ function App() {
                 value={letter.text}
                 onChange={(e: any) => {
                   const newWord = clone(currentWord);
-                  newWord[index].text = e.target?.value || "";
+                  newWord[index].text = e.target?.value.toLowerCase() || "";
 
                   if (newWord[index].text === "") {
                     setActiveValue("");
