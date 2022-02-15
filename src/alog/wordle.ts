@@ -36,3 +36,25 @@ export const getPossibleAnswers = (words: Word[]): string[] => {
 
   return possibleAnswers;
 };
+
+export const getSuggestions = (words: Word[]): string[] => {
+  let suggestions: string[] = [];
+  let inUse = new Set<Letter>();
+  let unUsed = new Set<Letter>();
+
+  words.forEach((word) => {
+    word.forEach((letter) => {
+      if (letter.inUse) {
+        inUse.add(letter);
+      }
+    });
+  });
+
+  suggestions = WORDS.filter(
+    (w) =>
+      [...inUse].every((l) => !w.includes(l.text)) &&
+      [...unUsed].every((l) => w.includes(l.text))
+  );
+
+  return suggestions.slice(0, 20);
+};

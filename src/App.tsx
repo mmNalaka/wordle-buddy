@@ -7,7 +7,7 @@ import { WorldList } from "./components/OpeningWords";
 import { Word } from "./types";
 import { DEFAULT_WORD, OPENING_WORDS } from "./alog/constants";
 import { LetterBox } from "./components/LetterBox";
-import { getPossibleAnswers } from "./alog/wordle";
+import { getPossibleAnswers, getSuggestions } from "./alog/wordle";
 
 function App() {
   const [gameWord, setGameWord] = useState("robin");
@@ -16,6 +16,7 @@ function App() {
   const [activeLetter, setActiveLetter] = useState<number>(0);
   const [activeValue, setActiveValue] = useState("");
   const [answers, setAnswers] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   useEffect(() => {
     const leister = (e: KeyboardEvent) => {
@@ -45,7 +46,9 @@ function App() {
     }
 
     const a = getPossibleAnswers([...guessedWords, currentWord]);
+    const s = getSuggestions([...guessedWords, currentWord]);
     setAnswers(a);
+    setSuggestions(s);
   };
 
   return (
@@ -154,6 +157,7 @@ function App() {
                 }
                 const newWord = [...currentWord];
                 newWord[activeLetter].set = true;
+                newWord[activeLetter].inUse = true;
                 newWord[activeLetter].inPosition = true;
                 setActiveLetter(activeLetter + 1);
                 setCurrentWord(newWord as Word);
@@ -171,14 +175,16 @@ function App() {
           </div>
 
           <div className="overflow-y-auto">
-            <WorldList
-              words={!guessedWords.length ? (OPENING_WORDS as any) : answers}
-              title={
-                !guessedWords.length
-                  ? "Opening suggestions"
-                  : "Possible answers"
-              }
-            />
+            <div className="grid grid-cols-2">
+              <WorldList
+                words={!guessedWords.length ? (OPENING_WORDS as any) : answers}
+                title={!guessedWords.length ? "Openings" : "Answers"}
+              />
+
+              {suggestions.length > 0 && (
+                <WorldList words={suggestions} title={"Suggestions"} />
+              )}
+            </div>
           </div>
         </section>
       </main>
