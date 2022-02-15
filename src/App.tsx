@@ -100,7 +100,7 @@ function App() {
 
                   if (e.target.value !== "") {
                     setActiveLetter(index + 1);
-                    setActiveValue(e.target.value);
+                    setActiveValue(e.target.value.toLowerCase());
                   }
                   setCurrentWord(newWord as Word);
                 }}
