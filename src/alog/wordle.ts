@@ -20,12 +20,16 @@ export const getPossibleAnswers = (words: Word[]): string[] => {
     });
   });
 
+  const unUsedArr = [...unUsed].filter((letter) =>
+    inPosition.every((l) => l.text !== letter.text)
+  );
+
   //  Filtering out words that are not in use
   let possibleAnswers: string[] = [];
 
   possibleAnswers = WORDS.filter(
     (w) =>
-      [...unUsed].every((l) => !w.includes(l.text)) &&
+      unUsedArr.every((l) => !w.includes(l.text)) &&
       [...inUse].every((l) => w.includes(l.text)) &&
       inPosition.every((l) => {
         return w.split("").find((l2, i) => {
